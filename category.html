@@ -16,6 +16,10 @@
                 <h2 class="text-padding" style="padding-top: 10px;">The Wild West - MIDI Files</h2>
                 <p id="text" class="text-padding p-mar" style="padding-bottom: 8px;">Searching for MIDIs with the tag:</p>
             </div>
+            <div class="center max-wid" style="height: auto !important; width: 60%; background-color: rgb(189, 255, 255); font-family: Arial, Helvetica, sans-serif;">
+                <h2 class="text-padding" style="padding-top: 10px;">The Wild West - MIDI Files</h2>
+                <p class="text-padding p-mar" style="padding-bottom: 8px;">Searching for MIDIs with the tag:</p>
+            </div>
         </main>
     </div>  
     <script>
@@ -25,7 +29,8 @@
         let Tag = search_params.get('tag')
 
         document.getElementById("text").innerHTML = "Searching for MIDIs with the tag: " + (Tag.substring(0, 1).toUpperCase() + Tag.substring(1));
-
+        
+        
     </script>
 </body>
 </html>
