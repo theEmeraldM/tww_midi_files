@@ -1,0 +1,81 @@
+body {
+    background-color: white;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header {
+    background-color: cyan;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 50px; 
+    padding-top: 25px; 
+    will-change: background, background-size;
+    box-shadow: 0 0 4px 2px rgb(0 0 0 / 20%);
+}
+.head-pad{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.p-title {
+    position: absolute;
+    top: 6.5px;
+    font-size: 20px;
+}
+.hide {
+    visibility: hidden;
+}
+.bar-right {
+    border-right: black solid 2px;
+}
+.hide-link {
+    text-decoration: none;
+    color: inherit;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+.centerText {
+   text-align: center;
+}
+.main-size {
+    max-width: 80%;
+}
+.text-padding {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.p-mar {
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+.max-wid {
+    max-width: 640px;
+}
+.Tmarg-5 {
+    margin-top: 2px;
+}
+a.list {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.column {
+    float: left;
+    width: 48.6%;
+    padding: 10px;
+    /*height: 300px; /* Should be removed. Only for demonstration */
+    box-sizing: border-box;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

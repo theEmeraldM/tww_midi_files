@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>MIDI files for TWW</title>
+    <link href="styles.css" type="text/css" rel="stylesheet" />
+</head>     
+<body>
+    <div id="root">
+        <header>
+            <p class="head-pad p-title bar-right"><a class="hide-link" href="index.html"><b>TWW MIDI Files</b></a></p>
+            <p class="head-pad hide" style="font-size: 20px;"><b>TWW MIDI Files</b></p> <!-- This just fixes the positioning -->
+        </header>
+        <main class="center">
+            <div class="center max-wid" style="height: auto !important; width: 60%; background-color: rgb(189, 255, 255); font-family: Arial, Helvetica, sans-serif;">
+                <h2 class="text-padding" style="padding-top: 10px;">The Wild West - MIDI Files</h2>
+                <p id="text" class="text-padding p-mar" style="padding-bottom: 8px;">Searching for MIDIs with the tag:</p>
+            </div>
+        </main>
+    </div>  
+    <script>
+        let url_str = window.location.href;
+        let url = new URL(url_str);
+        let search_params = url.searchParams; 
+        let Tag = search_params.get('tag')
+
+        document.getElementById("text").innerHTML = "Searching for MIDIs with the tag: " + (Tag.substring(0, 1).toUpperCase() + Tag.substring(1));
+
+    </script>
+</body>
+</html>
