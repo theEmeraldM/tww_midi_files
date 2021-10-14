@@ -4,6 +4,36 @@
     <meta charset="utf-8">
     <title>MIDI files for TWW</title>
     <link href="styles.css" type="text/css" rel="stylesheet" />
+
+    <style>
+        .item {
+            width: auto;
+            margin: 15px 40px 15px 40px;
+            height: 90px; 
+            background-color: rgb(224, 255, 255);
+            box-shadow: 0 0 4px 2px rgb(0 0 0 / 20%);
+
+        }
+        .item>p {
+            font-size: 20px;
+            margin-top: 21px;
+            margin-left: 15px;
+            display: inline-block;
+            padding: 10px;
+            border: 2px rgba(143, 161, 161, 0.801) dashed;
+        }
+        .item>button {
+            -webkit-appearance: button;
+            background-color: #f1f1f1;
+            padding: 10px 10px 10px 10px;
+            font-size: 18px;
+            text-align: center;
+            float: right;
+            margin-top: 22px;
+            margin-right: 30px;
+            cursor: pointer;
+        }
+    </style>
 </head>     
 <body>
     <div id="root">
@@ -14,11 +44,15 @@
         <main class="center">
             <div class="center max-wid" style="height: auto !important; width: 60%; background-color: rgb(189, 255, 255); font-family: Arial, Helvetica, sans-serif;">
                 <h2 class="text-padding" style="padding-top: 10px;">The Wild West - MIDI Files</h2>
-                <p id="text" class="text-padding p-mar" style="padding-bottom: 8px;">Searching for MIDIs with the tag:</p>
+                <p id="text" class="text-padding p-mar">Searching for MIDIs with the tag:</p>
+                <p class="text-padding p-mar" style="padding-bottom: 8px;">Click the "Copy" button on the midi you think sounds good. Enter the game and paste it into the "MIDI Data" text box in the Band menu in game.</p>
             </div>
-            <div class="center max-wid" style="height: auto !important; width: 60%; background-color: rgb(189, 255, 255); font-family: Arial, Helvetica, sans-serif;">
-                <h2 class="text-padding" style="padding-top: 10px;">The Wild West - MIDI Files</h2>
-                <p class="text-padding p-mar" style="padding-bottom: 8px;">Searching for MIDIs with the tag:</p>
+
+            <div id="listcontainer" class="center max-wid" style="height: auto !important; width: 60%; background-color: rgb(189, 255, 255); font-family: Arial, Helvetica, sans-serif; padding-top: 5px; padding-bottom: 5px; margin-top: 25px;">
+                <div class="item" style="display: none;" id="template">
+                    <p>Title</p>
+                    <button>Copy</button>
+                </div>
             </div>
         </main>
     </div>  
@@ -30,7 +64,54 @@
 
         document.getElementById("text").innerHTML = "Searching for MIDIs with the tag: " + (Tag.substring(0, 1).toUpperCase() + Tag.substring(1));
         
-        
+        const xhr = new XMLHttpRequest();
+        const apiURL = "https://api.github.com/repos/theEmeraldM/tww_midi_files/contents/midis"
+
+        var data;
+
+        xhr.open('GET', apiURL, true);
+        xhr.onload = function() { // Runs once we get the data from GitHub
+            data = JSON.parse(this.response); // Here is the data
+
+            for (var [i, v] of Object.entries(data)) {
+                const string = v["name"].toString();
+
+                if (string.includes(Tag) == true) { // Checks if the item has the tag
+                    var name = ((v["name"].toString()).split("="))[1];
+                    var newName = name.replace(/-/g, " ");
+                    newName = newName.substring(0, newName.length - 4); // Creates the name to be shown
+
+                    var original = document.getElementById("template"); // Here and down creates the list thing
+                    var clone = original.cloneNode(true);
+                    clone.removeAttribute("style");
+                    clone.removeAttribute("id");
+                    
+                    var children = clone.childNodes; 
+                    children[1].innerHTML = newName;
+                    children[3].setAttribute("onclick", "copyText('" + v["path"].toString() + "')");
+
+                    document.getElementById("listcontainer").appendChild(clone);  
+                };
+            };
+        };
+        xhr.send();
+
+        function copyText(itemID) {
+            var link = "https://github.com/theEmeraldM/tww_midi_files/blob/main/" + itemID.toString() + "?raw=true";
+            console.log(link);
+
+            var el = document.createElement('textarea'); // this and down is taken from https://techoverflow.net/2018/03/30/copying-strings-to-the-clipboard-using-pure-javascript/
+            el.value = link;
+
+            el.setAttribute('readonly', '');
+            el.style = {position: 'absolute', left: '-9999px'};
+            document.body.appendChild(el);
+
+            el.select();
+            document.execCommand('copy');
+
+            document.body.removeChild(el);
+        };
     </script>
 </body>
 </html>
